@@ -12,11 +12,22 @@ exits = {0: {"Q": 0},
          4: {"W": 1,"N": 2,"Q": 0},
          5: {"W": 2,"S": 1,"Q": 0}}
 
+named_exits = {1:{"2": 2,"3": 3,"4": 4,"5": 5},
+               2:{"5":5},
+               3:{"1":1},
+               4:{"1":1,"2":2},
+               5:{"2":2,"1":1}}
+
 vocabulary = {"QUIT": "Q",
               "NORTH": "N",
               "SOUTH": "S",
               "WEST": "W",
-              "EAST": "E"}
+              "EAST": "E",
+              "ROAD": "1",
+              "HILL": "2",
+              "BUILDING": "3",
+              "VALLEY": "4",
+              "FOREST": "5"}
 
 
 loc = 1
@@ -30,6 +41,10 @@ while True:
 
     if loc==0:
         break
+    else:
+        allexits = exits[loc].copy()
+        allexits.update(named_exits[loc])
+
 
     direction = input("Available exits are " + available_exits).upper()
     print()
@@ -44,7 +59,7 @@ while True:
                 direction = vocabulary[word]    #coz if the dictionary was long, it would be very less efficient
                 break
 
-    if direction in exits[loc]:
-        loc = exits[loc][direction]
+    if direction in allexits:
+        loc = allexits[direction]
     else:
         print("You can't go in that direction.")
